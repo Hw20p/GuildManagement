@@ -44,6 +44,22 @@
         </tr>
         </tbody>
     </table>
+
+    <!-- 페이징 -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <a th:if="${currentPage > 0}"
+           th:href="@{/guild(page=${currentPage - 1})}">이전</a>
+
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/guild(page=${i})}"
+           th:text="${i + 1}"
+           th:classappend="${i == currentPage} ? 'active' : ''"></a>
+    </span>
+
+        <a th:if="${currentPage < totalPages - 1}"
+           th:href="@{/guild(page=${currentPage + 1})}">다음</a>
+    </div>
+
 </div>
 </body>
 </html>

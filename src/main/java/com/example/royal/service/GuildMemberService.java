@@ -6,6 +6,8 @@ import com.example.royal.model.KnightCharacter;
 import com.example.royal.model.SubCharacter;
 import com.example.royal.repository.GuildMemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,9 @@ public class GuildMemberService {
 
     private final GuildMemberRepository memberRepo;
 
-    public List<GuildMemberDto> getAll() {
-        return memberRepo.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    public Page<GuildMemberDto> getAll(Pageable pageable) {
+        return memberRepo.findAll(pageable)
+                .map(this::toDto);
     }
 
     public GuildMemberDto getById(Long id) {

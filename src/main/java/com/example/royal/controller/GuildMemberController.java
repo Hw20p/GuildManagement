@@ -1,9 +1,12 @@
 package com.example.royal.controller;
 
 import com.example.royal.dto.GuildMemberDto;
-import com.example.royal.service.GuildMemberService;
 import com.example.royal.service.DiscordMessageService;
+import com.example.royal.service.GuildMemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +23,16 @@ public class GuildMemberController {
 
     // 전체 길드 멤버 조회
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("members", service.getAll());
+    public String list(Model model,
+                       @RequestParam(defaultValue = "0") int page) {  // 0-based page index
+        Pageable pageable = PageRequest.of(page, 10); // 한 페이지 10명
+        Page<GuildMemberDto> memberPage = service.getAll(pageable);
+
+        model.addAttribute("memberPage", memberPage);
+        model.addAttribute("members", memberPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", memberPage.getTotalPages());
+
         return "guild/member-list";
     }
 
