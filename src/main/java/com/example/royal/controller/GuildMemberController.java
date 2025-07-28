@@ -2,10 +2,14 @@ package com.example.royal.controller;
 
 import com.example.royal.dto.GuildMemberDto;
 import com.example.royal.service.GuildMemberService;
+import com.example.royal.service.DiscordMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/guild")
@@ -54,5 +58,29 @@ public class GuildMemberController {
     public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/guild";
+    }
+
+
+    // ===== 디스코드 메시지 분류 기능 =====
+
+    // 디스코드 메시지 입력 폼 페이지
+    @GetMapping("/discord-messages")
+    public String discordMessagesForm() {
+        return "guild/discord-messages";
+    }
+
+    // 디스코드 메시지를 사용자별로 분류하여 표시
+    @PostMapping("/discord-messages")
+    public String showDiscordMessages(@RequestParam("discordText") String discordText, Model model) {
+        try {
+            Map<String, List<String>> userMessages = DiscordMessageService.parseDiscordMessagesByUser(discordText);
+            model.addAttribute("userMessages", userMessages);
+            model.addAttribute("totalUsers", userMessages.size());
+            model.addAttribute("discordText", discordText);
+            return "guild/discord-messages-result";
+        } catch (Exception e) {
+            model.addAttribute("error", "메시지 파싱 중 오류가 발생했습니다: " + e.getMessage());
+            return "guild/discord-messages";
+        }
     }
 }

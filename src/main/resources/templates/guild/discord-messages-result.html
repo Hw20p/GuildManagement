@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디스코드 메시지 분류 결과</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/discord-messages.css" rel="stylesheet">
+</head>
+<body>
+<div class="main-content">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- 헤더 -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2>디스코드 메시지 분류 결과</h2>
+                        <p class="text-muted mb-0">사용자별로 입력한 메시지들을 분류했습니다.</p>
+                    </div>
+                    <div class="stats-card p-3 rounded text-center">
+                        <h4 class="mb-1" th:text="${totalUsers}">0</h4>
+                        <small>명의 사용자</small>
+                    </div>
+                </div>
+
+                <!-- 액션 버튼들 -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <a href="/guild/discord-messages" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-arrow-left"></i> 다시 입력
+                        </a>
+                        <a href="/guild" class="btn btn-outline-primary">
+                            <i class="bi bi-list"></i> 길드 목록
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 사용자별 메시지 목록 -->
+                <div class="row">
+                    <div th:each="userEntry : ${userMessages}" class="col-md-12 mb-4">
+                        <div class="card user-card">
+                            <div class="card-header user-header">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-person-circle me-2"></i>
+                                    <span th:text="${userEntry.key}">사용자명</span>
+                                    <span class="badge bg-light text-dark ms-2"
+                                          th:text="${userEntry.value.size()} + '개 메시지'">메시지 수</span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div th:each="message, messageStat : ${userEntry.value}">
+                                    <div class="message-content" th:text="${message}">메시지 내용</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 빈 결과 메시지 -->
+                <div th:if="${userMessages.empty}" class="empty-result">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <h4>분류된 메시지가 없습니다</h4>
+                            <p>디스코드 메시지 형식을 확인하고 다시 시도해주세요.</p>
+                            <a href="/guild/discord-messages" class="btn btn-primary">
+                                <i class="bi bi-arrow-left"></i> 다시 입력
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

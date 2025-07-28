@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디스코드 메시지 분류</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/discord-messages.css" rel="stylesheet">
+</head>
+<body>
+<div class="main-content">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>디스코드 메시지 분류</h2>
+                <p class="text-muted">디스코드에서 복사한 메시지를 사용자별로 분류해서 보여드립니다.</p>
+
+                <!-- 오류 메시지 -->
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <strong>오류!</strong> <span th:text="${error}"></span>
+                </div>
+
+                <!-- 디스코드 메시지 입력 폼 -->
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="/guild/discord-messages">
+                            <div class="mb-3">
+                                <label for="discordText" class="form-label">디스코드 메시지</label>
+                                <textarea class="form-control" id="discordText" name="discordText"
+                                          rows="15" placeholder="디스코드에서 복사한 메시지를 여기에 붙여넣으세요..."
+                                          required></textarea>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-list-ul"></i> 메시지 분류하기
+                                </button>
+                                <a href="/guild" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> 목록으로
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 예시 데이터 -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h6>예시 데이터</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mt-3">
+                            <code class="sample-data-code" id="sampleData">
+                                1. 로아 — 2025-07-10 오후 3:49
+                                본캐 - 로아 배럭 - 위즈, 데스, 벌레, 오더
+                                2. 테슬 — 2025-07-10 오후 7:10
+                                본캐 - 테슬 부캐 - 벼슬(추가) 배럭 - 머슬,모슬,보슬,조슬
+                                3. 웅니 — 2025-07-10 오후 8:10
+                                부캐(변경) - 로랑 -> 웅니얼굴
+                                4. 2025년 7월 11일
+                                5. 하링 — 2025-07-11 오후 1:36
+                                본캐 - 하링(HARI) 배럭 - 나밍, 다밍, 라밍, 짜밍 본캐변경 HARI > 하링 / 배럭 4개 추가 (수정됨)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fillSampleData() {
+        document.getElementById('discordText').value = document.getElementById('sampleData').textContent;
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

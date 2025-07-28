@@ -9,7 +9,7 @@ body {
 
 .board-wrapper {
     width: 90%;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 150px auto;
     background: #ffffff;
     border: 1px solid #d1d5db;
@@ -197,5 +197,9 @@ body {
 .list-actions {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.list-actions a+a {
+    margin-left: 15px;
 }
