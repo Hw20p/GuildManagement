@@ -1,0 +1,8 @@
+<!-- templates/board/edit.html -->
+<h1>게시글 수정</h1>
+<form th:action="@{'/board/' + ${post.id} + '/edit'}" th:object="${post}" method="post">
+    제목: <input type="text" th:field="*{title}" /><br/>
+    작성자: <input type="text" th:field="*{author}" /><br/>
+    내용: <textarea th:field="*{content}"></textarea><br/>
+    <button type="submit">수정 완료</button>
+</form>

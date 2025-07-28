@@ -1,0 +1,201 @@
+/* Guild Management System Styles */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6f7;
+    padding: 40px 0;
+}
+
+.board-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 150px auto;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 30px 40px;
+}
+
+.board-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+/* Form Styles */
+.write-form .form-row {
+    margin-bottom: 20px;
+}
+
+.write-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.write-form input[type="text"],
+.write-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fafafa;
+}
+
+.write-form textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+/* Button Styles */
+.submit-btn,
+.reset-btn,
+.add-btn,
+.edit-btn,
+.delete-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.submit-btn {
+    background-color: #2c7be5;
+    color: white;
+    padding: 10px 24px;
+    font-size: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #1a68d1;
+}
+
+.reset-btn {
+    background-color: #e5e7eb;
+    color: #111827;
+    padding: 10px 24px;
+    font-size: 1rem;
+}
+
+.reset-btn:hover {
+    background-color: #d1d5db;
+}
+
+.add-btn {
+    background-color: #059669;
+    color: white;
+    padding: 10px 24px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.add-btn:hover {
+    background-color: #047857;
+}
+
+.edit-btn {
+    background-color: #2c7be5;
+    color: black !important;
+}
+
+.edit-btn:hover {
+    background-color: #1a68d1;
+}
+
+.delete-btn {
+    background-color: #dc2626;
+    color: white;
+    margin-left: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* Table Styles */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+.board-table th, .board-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.board-table th {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+}
+
+.board-table tr:hover {
+    background-color: #f9fafb;
+}
+
+.board-table a {
+    color: #2c7be5;
+    text-decoration: none;
+}
+
+.board-table a:hover {
+    text-decoration: underline;
+}
+
+/* Utility Styles */
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2c7be5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline;
+}
+
+.empty-message {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    padding: 40px 0;
+}
+
+/* List page specific styles */
+.list-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}

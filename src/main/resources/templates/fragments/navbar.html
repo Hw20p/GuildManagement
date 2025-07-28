@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="navbar">
+<head>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+<body>
+<div class="menuBar-container">
+    <!-- 상단 바 -->
+    <div class="menuBar-top">
+        <div class="menuBar-left">
+            <a class="menuBar-logo" th:href="@{/}">
+                Maple<span class="highlight">Guild</span>
+            </a>
+            <div class="menuBar-description">길드 운영 시스템</div>
+        </div>
+        <div class="menuBar-right">
+            <div class="menuBar-greeting">환영합니다, 용사님!</div>
+            <a class="menuBar-auth" th:href="@{/login}">로그인</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="menuBar-logout">로그아웃</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 하단 메뉴 네비게이션 -->
+    <div class="menuBar-bottom">
+        <div class="menuBar-bottom-inner">
+            <a href="/" class="menuBar-nav">메인</a>
+            <a href="/guild" class="menuBar-nav2">길드</a>
+            <a href="/" class="menuBar-nav3">거래</a>
+            <a href="/board" class="menuBar-nav">게시판</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

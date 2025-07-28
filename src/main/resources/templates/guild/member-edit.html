@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<head>
+    <title>길드원 수정</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guild-styles.css}">
+</head>
+<body>
+<div class="board-wrapper">
+    <a href="/guild" class="back-link">← 길드원 목록으로 돌아가기</a>
+    <h2 class="board-title">길드원 수정</h2>
+
+    <form th:action="@{/guild/edit/{id}(id=${member.id})}" method="post" class="write-form">
+        <div class="form-row">
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" th:value="${member.name}" />
+        </div>
+
+        <div class="form-row">
+            <label for="subCharacterNames">부캐 (쉼표로 구분):</label>
+            <input type="text" id="subCharacterNames" name="subCharacterNames" th:value="${#strings.arrayJoin(member.subCharacterNames, ',')}" />
+        </div>
+
+        <div class="form-row">
+            <label for="knightCharacterNames">기사 (쉼표로 구분):</label>
+            <input type="text" id="knightCharacterNames" name="knightCharacterNames" th:value="${#strings.arrayJoin(member.knightCharacterNames, ',')}" />
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="reset-btn" onclick="history.back()">취소</button>
+            <button type="submit" class="submit-btn">저장</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

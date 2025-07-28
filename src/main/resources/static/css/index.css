@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ede7e7;
+    color: #062f42;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 배경 이미지 영역: 아이콘 바 전까지 영역 */
+.background-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 650px; /* 아이콘 바 바로 위까지 높이 설정 (필요시 조정) */
+    background-image: url('index/image.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* 슬라이드 배너: 배경 이미지 위에 올라감 */
+.carousel {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    height: 240px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(6, 47, 66, 0.3);
+    overflow: hidden;
+    margin-top: 100px;
+    background: rgba(255, 255, 255, 0.15); /* 반투명 흰 배경 */
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide-counter {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    background: rgba(0,0,0,0.4);
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.features {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 14px 20px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #062f42;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.card.guide {
+    border: 1px solid #ffa26f;
+}
+
+
+.card.guild {
+    border: 1px solid #3bf121;
+}
+
+.card.trade {
+    border: 1px solid #3eadff;
+}
+
+.card.board {
+    border: 1px solid #b25aff;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(6,47,66,0.3);
+    color: #0a4b64;
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    color: #f3c623;
+}
+
+.card-icon.board {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 12px;
+    background-image: url('index/FreeBoardIcon.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.card-icon.trade {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 12px;
+    background-image: url('index/TradeIcon.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.card-icon.Guild {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 12px;
+    background-image: url('index/GuildIcon.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.card-icon.Guide {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 12px;
+    background-image: url('index/GuideIcon.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}

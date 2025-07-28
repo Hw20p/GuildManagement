@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>메이플 길드 관리</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+    <script>
+        // 간단한 JS 슬라이드 자동 전환
+        let currentSlide = 0;
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            const counter = document.querySelector('.carousel-slide-counter');
+            if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
+        }
+
+        function startCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (slides.length === 0) return;
+            showSlide(currentSlide);
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+        }
+
+        window.addEventListener('DOMContentLoaded', startCarousel);
+    </script>
+</head>
+<body>
+
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- 배경 이미지 -->
+<div class="background-image-wrapper"></div>
+
+<!-- 슬라이드 바 -->
+<div class="carousel">
+    <div class="carousel-slide active" style="background-image: url('/css/index/Slide01.png');"></div>
+    <div class="carousel-slide" style="background-image: url('/css/index/Slide02.png');"></div>
+    <div class="carousel-slide" style="background-image: url('/css/index/Slide03.png');"></div>
+    <div class="carousel-slide-counter">1 / 3</div>
+</div>
+
+<!-- 기능 아이콘 카드 -->
+<div class="features">
+    <div class="card guide" onclick="window.location='/guide'">
+        <div class="card-icon Guide"></div>
+        가이드
+    </div>
+    <div class="card guild" onclick="window.location='/guild'">
+        <div class="card-icon Guild"></div>
+        길드원
+    </div>
+    <div class="card trade" onclick="window.location='/achievement'">
+        <div class="card-icon trade"></div>
+        거래
+    </div>
+    <div class="card board" onclick="window.location='/board'">
+        <div class="card-icon board"></div>
+        게시판
+    </div>
+</div>
+
+</body>
+</html>

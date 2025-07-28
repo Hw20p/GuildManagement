@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<head>
+    <title>길드원 목록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guild-styles.css}">
+</head>
+<body>
+<div class="board-wrapper">
+    <h2 class="board-title">길드원 목록</h2>
+
+    <div class="list-actions">
+        <a href="/guild/new" class="add-btn">+ 길드원 추가</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(members)}" class="empty-message">
+        등록된 길드원이 없습니다.
+    </div>
+
+    <table class="board-table" th:unless="${#lists.isEmpty(members)}">
+        <thead>
+        <tr>
+            <th>기사/본캐</th>
+            <th>부기사/부캐</th>
+            <th>배럭</th>
+            <th style="width: 150px;">액션</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.name}"></td>
+            <td th:text="${#strings.arrayJoin(member.subCharacterNames, ', ')}"></td>
+            <td th:text="${#strings.arrayJoin(member.knightCharacterNames, ', ')}"></td>
+            <td>
+                <div class="action-buttons">
+                    <a th:href="@{/guild/edit/{id}(id=${member.id})}" class="edit-btn">수정</a>
+                    <form th:action="@{/guild/delete/{id}(id=${member.id})}" method="post" style="display:inline">
+                        <button type="submit" class="delete-btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
