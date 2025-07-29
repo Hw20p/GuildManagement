@@ -29,6 +29,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.mysql:mysql-connector-j:8.0.33'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+}
+
+springBoot {
+	mainClass = 'com.example.royal.RoyalApplication'
+}
+
+bootJar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.named('test') {

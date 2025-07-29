@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 네비게이션 바 -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>디스코드 메시지 분류 결과</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/discord-messages.css" rel="stylesheet" />
+</head>
+<body>
+<div class="main-content">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- 헤더 -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2>디스코드 메시지 분류 결과</h2>
+                        <p class="text-muted mb-0">사용자별로 입력한 메시지들을 분류했습니다.</p>
+                    </div>
+                    <div class="stats-card p-3 rounded text-center">
+                        <h4 class="mb-1" th:text="${totalUsers}">0</h4>
+                        <small>명의 사용자</small>
+                    </div>
+                </div>
+
+                <!-- 액션 버튼들 -->
+                <div class="card mb-4">
+                    <div class="card-body d-flex flex-wrap">
+                        <a href="/guild/discord-messages" class="btn btn-outline-secondary me-2 mb-2">
+                            <i class="bi bi-arrow-left"></i> 다시 입력
+                        </a>
+                        <a href="/guild" class="btn btn-outline-primary me-2 mb-2">
+                            <i class="bi bi-list"></i> 길드 목록
+                        </a>
+                        <button type="button" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                            길드 멤버 추가
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 사용자별 메시지 목록 -->
+                <div class="row">
+                    <div th:each="userEntry : ${userMessages}" class="col-md-12 mb-4">
+                        <div class="card user-card">
+                            <div class="card-header user-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-person-circle me-2"></i>
+                                    <span th:text="${userEntry.key}">사용자명</span>
+                                    <span class="badge bg-light text-dark ms-2" th:text="${userEntry.value.size()} + '개 메시지'">메시지 수</span>
+                                </h5>
+                                <!-- 삭제 버튼 -->
+                                <button class="btn btn-sm btn-outline-danger btn-delete-user" title="사용자 삭제">❌</button>
+                            </div>
+                            <div class="card-body">
+                                <div th:each="message, messageStat : ${userEntry.value}">
+                                    <div class="message-content" th:text="${message}">메시지 내용</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 빈 결과 메시지 -->
+                <div th:if="${userMessages.empty}" class="empty-result">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <h4>분류된 메시지가 없습니다</h4>
+                            <p>디스코드 메시지 형식을 확인하고 다시 시도해주세요.</p>
+                            <a href="/guild/discord-messages" class="btn btn-primary">
+                                <i class="bi bi-arrow-left"></i> 다시 입력
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 길드 멤버 추가 모달 -->
+                <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                    <!-- 드래그 가능하도록 ID 추가 -->
+                    <div class="modal-dialog" id="draggableModal">
+                        <div class="modal-content">
+                            <form id="addMemberForm" th:action="@{/guild}" method="post" class="p-3">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addMemberModalLabel">길드 멤버 추가</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">기사/본캐</label>
+                                        <input type="text" class="form-control" id="name" name="name" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="subCharacterNames" class="form-label">부기사/부캐 (쉼표로 구분)</label>
+                                        <input type="text" class="form-control" id="subCharacterNames" name="subCharacterNames" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="knightCharacterNames" class="form-label">배럭 (쉼표로 구분)</label>
+                                        <input type="text" class="form-control" id="knightCharacterNames" name="knightCharacterNames" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                    <button type="submit" class="btn btn-primary">저장</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 모달 열려도 뒤에 페이지 비활성화 X, 스크롤 락 해제
+    const addMemberModal = document.getElementById('addMemberModal');
+
+    addMemberModal.addEventListener('shown.bs.modal', () => {
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = 'auto';
+    });
+    addMemberModal.addEventListener('hidden.bs.modal', () => {
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = 'auto';
+    });
+
+    // 저장 버튼 클릭 시 페이지 리다이렉트 없이 비동기 POST 요청 보내기
+    const addMemberForm = document.getElementById('addMemberForm');
+
+    addMemberForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 제출 막기
+
+        const formData = new FormData(addMemberForm);
+
+        fetch(addMemberForm.action, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 성공하면 모달 닫기
+                    const modal = bootstrap.Modal.getInstance(addMemberModal);
+                    modal.hide();
+
+                    alert('길드 멤버가 추가되었습니다.');
+
+                    // 폼 초기화
+                    addMemberForm.reset();
+
+                    // 필요 시, 여기서 페이지 일부를 새로고침하거나 데이터 갱신 가능
+                } else {
+                    alert('길드 멤버 추가에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+                alert('서버와 통신 중 오류가 발생했습니다.');
+            });
+    });
+
+    // 사용자 삭제 버튼 클릭 시 카드 제거
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-delete-user')) {
+            const userCard = event.target.closest('.user-card');
+            if (userCard) {
+                userCard.remove();
+            }
+        }
+    });
+
+    // 드래그 가능한 모달
+    const draggableDialog = document.getElementById("draggableModal");
+    const modalHeader = draggableDialog.querySelector(".modal-header");
+
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+
+    modalHeader.style.cursor = "move";
+
+    modalHeader.addEventListener("mousedown", function (e) {
+        isDragging = true;
+        const rect = draggableDialog.getBoundingClientRect();
+
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        // 고정 위치 및 크기 적용
+        draggableDialog.style.position = "absolute";
+        draggableDialog.style.margin = "0";
+        draggableDialog.style.left = `${startLeft}px`;
+        draggableDialog.style.top = `${startTop}px`;
+        draggableDialog.style.width = `${rect.width}px`;
+    });
+
+    document.addEventListener("mousemove", function (e) {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        draggableDialog.style.left = `${startLeft + dx}px`;
+        draggableDialog.style.top = `${startTop + dy}px`;
+    });
+
+    document.addEventListener("mouseup", function () {
+        isDragging = false;
+    });
+</script>
+</body>
+</html>
