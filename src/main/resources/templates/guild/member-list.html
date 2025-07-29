@@ -11,8 +11,17 @@
     <h2 class="board-title">길드원 목록</h2>
 
     <div class="list-actions">
-        <a href="/guild/discord-messages" class="add-btn">+ 메시지 분류</a>
-        <a href="/guild/new" class="add-btn">+ 길드원 추가</a>
+        <form th:action="@{/guild}" method="get" class="search-form">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력...">
+            <button type="submit">검색</button>
+            <button type="button" class="reset-btn" onclick="resetSearch()">초기화</button>
+        </form>
+
+        <div class="button-group">
+            <a href="/guild/export" class="add-btn">📥 엑셀 다운로드</a>
+            <a href="/guild/discord-messages" class="add-btn">+ 메시지 분류</a>
+            <a href="/guild/new" class="add-btn">+ 길드원 추가</a>
+        </div>
     </div>
 
     <div th:if="${#lists.isEmpty(members)}" class="empty-message">
@@ -48,18 +57,27 @@
     <!-- 페이징 -->
     <div class="pagination" th:if="${totalPages > 1}">
         <a th:if="${currentPage > 0}"
-           th:href="@{/guild(page=${currentPage - 1})}">이전</a>
+           th:href="@{/guild(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
 
         <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-        <a th:href="@{/guild(page=${i})}"
+        <a th:href="@{/guild(page=${i}, keyword=${keyword})}"
            th:text="${i + 1}"
            th:classappend="${i == currentPage} ? 'active' : ''"></a>
     </span>
 
         <a th:if="${currentPage < totalPages - 1}"
-           th:href="@{/guild(page=${currentPage + 1})}">다음</a>
+           th:href="@{/guild(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
     </div>
 
 </div>
+
+<script>
+    function resetSearch() {
+        const form = document.querySelector('.search-form');
+        form.keyword.value = '';  // 검색어 입력창 비우기
+        form.submit();            // 폼 제출해서 리스트 초기 상태로
+    }
+</script>
+
 </body>
 </html>

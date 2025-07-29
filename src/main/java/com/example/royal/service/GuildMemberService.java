@@ -24,6 +24,12 @@ public class GuildMemberService {
                 .map(this::toDto);
     }
 
+    public List<GuildMemberDto> getAllMembers() {
+        return memberRepo.findAll().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     public GuildMemberDto getById(Long id) {
         return toDto(memberRepo.findById(id).orElseThrow());
     }
@@ -73,4 +79,11 @@ public class GuildMemberService {
                 .knightCharacterNames(member.getKnightCharacters().stream().map(KnightCharacter::getName).toList())
                 .build();
     }
+
+    public Page<GuildMemberDto> searchByKeyword(String keyword, Pageable pageable) {
+        return memberRepo.searchByKeyword(keyword, pageable)
+                .map(this::toDto);
+    }
+
+
 }

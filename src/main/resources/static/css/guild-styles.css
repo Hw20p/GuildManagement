@@ -196,13 +196,83 @@ body {
 /* List page specific styles */
 .list-actions {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
+    justify-content: space-between; /* 좌우 끝 정렬 */
+    align-items: center;
+    gap: 10px;
 }
 
-.list-actions a+a {
-    margin-left: 15px;
+/* 검색 폼 */
+.search-form {
+    display: flex;
+    align-items: center;
 }
+
+.search-form input[type="text"] {
+    padding: 6px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px 0 0 6px;
+    font-size: 14px;
+    outline: none;
+    width: 180px;
+    transition: border-color 0.3s ease;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #4A90E2; /* 파란 포커스 색 */
+    box-shadow: 0 0 5px rgba(74,144,226,0.5);
+}
+
+/* 검색 버튼 */
+.search-form button {
+    padding: 6px 14px;
+    border: none;
+    background-color: #4A90E2;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #357ABD;
+}
+
+/* 버튼 그룹 */
+.button-group a.add-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.button-group a.add-btn:hover {
+    background-color: #495057;
+}
+
+.search-form .reset-btn {
+    padding: 6px 12px;
+    margin-left: 8px;
+    border: 1.5px solid #ccc;
+    background-color: white;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.search-form .reset-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
 
 /* Pagination Styles */
 .pagination {
